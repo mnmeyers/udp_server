@@ -1,9 +1,8 @@
-#!/usr/bin/env node
 var dgram = require('dgram');
 var client = dgram.createSocket({type: 'udp4', reuseAddr: true});
 const PORT = 4000;
 const MULTICAST_ADDRESS = '230.1.2.3';
-var ADDRESS;
+var address;
 
 client.on('message', (message, rinfo) => {
    console.log('got message: ', message.toString(), 'from ', rinfo.address + ':'
@@ -11,8 +10,8 @@ client.on('message', (message, rinfo) => {
 });
 
 client.on('listening', () => {
-   ADDRESS = client.address();
-   console.log('udp client listening on', ADDRESS.address + ':' + ADDRESS.port);
+   address = client.address();
+   console.log('udp client listening on', address.address + ':' + address.port);
    client.setBroadcast(true);
 });
 

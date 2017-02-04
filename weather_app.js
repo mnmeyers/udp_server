@@ -1,13 +1,13 @@
 var server = require('dgram').createSocket('udp4');
 const ADDRESS = '230.1.2.3';
-const srcPort = 8000;
-const port = 4000;
+const SRC_PORT = 8000;
+const PORT = 4000;
 
 server.on('message', (message, rinfo) => {
     console.log('server got a message: ', message.toString(), ' from ', rinfo.address, ':', rinfo.port);
 });
 
-server.bind(srcPort, () => {
+server.bind(SRC_PORT, () => {
     server.setBroadcast(true);
     setInterval(multicastNew, 3000);//every 3 seconds
 });
@@ -29,7 +29,7 @@ function multicastNew() {
 
     function send(message) {
         message = new Buffer(message);
-        server.send(message, 0, message.length, port, ADDRESS, () => {
+        server.send(message, 0, message.length, PORT, ADDRESS, () => {
             console.log('sent ' + message.toString());
         });
     }
